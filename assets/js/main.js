@@ -147,50 +147,6 @@
     parent.addEventListener('mouseleave', () => { ticker.style.animationPlayState = 'running'; });
   }
 
-  /* ── DOWNLOAD PORTFOLIO AS PDF ─────────────────────── */
-  const downloadPortfolioBtn = document.getElementById('download-portfolio-btn');
   
-  if (downloadPortfolioBtn) {
-    downloadPortfolioBtn.addEventListener('click', function () {
-      
-      // 1. Change button text to show it's loading
-      const originalText = this.innerHTML;
-      this.innerHTML = 'Generating PDF... Please wait.';
-      this.style.opacity = '0.7';
-      this.style.pointerEvents = 'none';
-
-      // 2. Hide elements that look bad in a PDF (like the sticky header and progress bar)
-      const header = document.getElementById('site-header');
-      const progress = document.getElementById('scroll-progress');
-      if (header) header.style.display = 'none';
-      if (progress) progress.style.display = 'none';
-
-      // 3. Select the whole body to convert
-      const element = document.body;
-
-      // 4. Configure PDF options
-      const opt = {
-        margin:       [0, 0, 0, 0],
-        filename:     'Sumaiya_Jahan_Alo_Portfolio.pdf',
-        image:        { type: 'jpeg', quality: 0.98 },
-        html2canvas:  { 
-          scale: 2, 
-          useCORS: true, 
-          scrollY: 0 // Ensures it captures from the top of the page
-        },
-        jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
-      };
-
-      // 5. Generate the PDF
-      html2pdf().set(opt).from(element).save().then(() => {
-        // 6. Restore the header, progress bar, and button text after downloading
-        if (header) header.style.display = '';
-        if (progress) progress.style.display = '';
-        this.innerHTML = originalText;
-        this.style.opacity = '1';
-        this.style.pointerEvents = 'auto';
-      });
-    });
-  }
 
 })();
